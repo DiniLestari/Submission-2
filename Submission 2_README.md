@@ -24,9 +24,9 @@ Dengan semakin berkembangnya jumlah buku digital yang tersedia, pembaca sering k
  
 Untuk mengatasi masalah ini, penting bagi pembaca untuk memiliki tujuan yang jelas saat memilih buku—apakah itu untuk hiburan, edukasi, atau untuk memperluas perspektif mereka—serta menggunakan pendekatan membaca yang lebih aktif dan terstruktur, seperti dengan menilai sinopsis, ulasan, dan rekomendasi yang relevan. Teknik ini dapat membantu mengurangi rasa kewalahan dan meningkatkan kualitas pengalaman membaca. [5](https://theinvisiblementor.com/the-art-of-reading-francis-bacons-wisdom-on-consuming-books/)
 
-Hal ini dapat diselesaikan dengan sistem rekomendasi. [6](https://www.%20Interact.%20org/literature/article/information-overload-whyit-matters-and-how-to-combat-it.) Sistem rekomendasi telah dikembangkan untuk mengatasi kelebihan informasi, membantu pengambilan keputusan pengguna, dan mencapai berbagai bentuk personalisasi jelas bahwa model tradisional dalam pengambilan informasi sering kali gagal untuk menghubungkan pengguna dengan materi yang relevan secara optimal.[7](https://www.%20Interact.%20org/literature/article/information-overload-whyit-matters-and-how-to-combat-it.)
+Hal ini dapat diselesaikan dengan sistem rekomendasi. [6](https://www.%20Interact.%20org/literature/article/information-overload-whyit-matters-and-how-to-combat-it.) Sistem rekomendasi telah dikembangkan untuk mengatasi kelebihan informasi, membantu pengambilan keputusan pengguna, dan mencapai berbagai bentuk personalisasi jelas bahwa model tradisional dalam pengambilan informasi sering kali gagal untuk menghubungkan pengguna dengan materi yang relevan secara optimal.
 
-Untuk mengimplementasikan hal ini, telah dilakukan pembangunan sistem rekomendasi dengan **Collaborative Filtering** [8](https://ieeexplore.ieee.org/document/7176109) Kemiripan didapatkan dengan menggunakan metode cosine similarity [[9](https://dl.acm.org/doi/10.1145/3639233.3639335)]. 
+Untuk mengimplementasikan hal ini, telah dilakukan pembangunan sistem rekomendasi dengan **Collaborative Filtering** [7](https://ieeexplore.ieee.org/document/7176109) Kemiripan didapatkan dengan menggunakan metode cosine similarity [[8](https://dl.acm.org/doi/10.1145/3639233.3639335)]. 
 
 Proyek yang dirancang kali ini merupakan proyek membuat sistem rekomendasi judul buku berdasarkan penggabungan tiga data set mengenai data Books, Users, dan Ratings yang dapat merekomendasikan buku berdasarkan judul buku yang telah dibaca sebelumnya dengan **Collaborative Filtering**. 
 ___
@@ -51,7 +51,7 @@ Solusi yang dapat dilakukan untuk memenuhi tujuan dari proyek ini diantaranya :
     * Membersihkan dataset dengan mengisi nilai yang hilang pada beberapa kolom, menghapus entri duplikat, serta menghapus pengguna dengan data yang tidak lengkap.
    
 * Metode yang digunakan pada projek ini adalah Collaborative Filtering.
-  Untuk mengatasi beberapa keterbatasan pemfilteran berbasis konten, penyaringan kolaboratif menggunakan kesamaan antara pengguna dan item secara bersamaan untuk memberikan rekomendasi. Dengan menganalisis data penilaian, sistem ini membuat tabel pivot yang memetakan buku ke pengguna dan menghitung kesamaan antara buku berdasarkan penilaian pengguna. Sistem ini kemudian merekomendasikan buku yang paling mirip dengan buku input yang diberikan, memberikan pengguna daftar saran yang dipersonalisasi. [10](https://developers.google.com/machine-learning/recommendation/collaborative/basics?hl=id)
+  Untuk mengatasi beberapa keterbatasan pemfilteran berbasis konten, penyaringan kolaboratif menggunakan kesamaan antara pengguna dan item secara bersamaan untuk memberikan rekomendasi. Dengan menganalisis data penilaian, sistem ini membuat tabel pivot yang memetakan buku ke pengguna dan menghitung kesamaan antara buku berdasarkan penilaian pengguna. Sistem ini kemudian merekomendasikan buku yang paling mirip dengan buku input yang diberikan, memberikan pengguna daftar saran yang dipersonalisasi. [9](https://developers.google.com/machine-learning/recommendation/collaborative/basics?hl=id)
 
  Namun, metode Collaborative Filtering memiliki kelbihan dan kekurangan yaitu: 
  
@@ -324,7 +324,7 @@ _Collaborative Filtering_ (CF) adalah salah satu teknik dalam sistem rekomendasi
     _Sparsity_: Jika data interaksi sangat jarang, kualitas rekomendasi bisa menurun.
 
 Sedangkan _cosine similarity_ adalah salah satu teknik mengukur kesamaan yang bekerja dengan mengukur kesamaan antara dua vektor dan menentukan apakah kedua vektor tersebut menunjuk ke arah yang sama dengan menghitung sudut cosinus antara dua vektor. Semakin kecil sudut cosinus, semakin besar nilai _cosine similarity_.
-cara kerja dari fungsi *cosine similiraty* yaitu dengan melakukan perhitungan yang sering digunakan untuk menghitung kemiripan diantara item-item [[10]](https://jurnal.uns.ac.id/itsmart/article/download/35008/27748). Secara umum, fungsi similarity adalah fungsi yang menerima dua buah obyek berupa bilangan riil (0 dan 1) dan mengembalikan nilai kemiripan (similarity) antara kedua obyek tersebut berupa bilangan riil. Cosine similarity merupakan salah satu metode pengukuran kemiripan yang populer. Metode ini digunakan untuk menghitung nilai kosinus sudut antara dua vektor dan biasanya digunakan untuk mengukur kemiripan antara dua teks/dokumen. Fungsi cosine similarity antara item A dan item B ditunjukkan sebagai berikut [[11]](https://jurnal.uns.ac.id/itsmart/article/download/35008/27748). 
+cara kerja dari fungsi *cosine similiraty* yaitu dengan melakukan perhitungan yang sering digunakan untuk menghitung kemiripan diantara item-item [[10]](https://jurnal.uns.ac.id/itsmart/article/download/35008/27748). Secara umum, fungsi similarity adalah fungsi yang menerima dua buah obyek berupa bilangan riil (0 dan 1) dan mengembalikan nilai kemiripan (similarity) antara kedua obyek tersebut berupa bilangan riil. Cosine similarity merupakan salah satu metode pengukuran kemiripan yang populer. Metode ini digunakan untuk menghitung nilai kosinus sudut antara dua vektor dan biasanya digunakan untuk mengukur kemiripan antara dua teks/dokumen. Fungsi cosine similarity antara item A dan item B ditunjukkan sebagai berikut [[10]](https://jurnal.uns.ac.id/itsmart/article/download/35008/27748). 
 ![68747470733a2f2f692e6962622e636f2f744a58465a58422f696d6167652e706e67](https://github.com/user-attachments/assets/7f8ccd15-83c0-45de-8322-7e0ec8086e96)
 
 Keterangan:
@@ -391,18 +391,18 @@ Parameter penting yang dipakai dalam fungsi ini adalah :
 
 Berikut _top_-10 _recommemdation_ berdasarkan genre dari judul buku "*Lord of the Flies*"
 
-| Title                                  | Author               | Image URL                                                               | Similarity |
-|----------------------------------------|----------------------|-------------------------------------------------------------------------|------------|
-| Death of A Salesman                   | Arthur Miller        | ![Image](http://images.amazon.com/images/P/0140481346.01.LZZZZZZZ.jpg)  | 0.23       |
-| 1984                                   | George Orwell        | ![Image](http://images.amazon.com/images/P/0451524934.01.LZZZZZZZ.jpg)  | 0.22       |
-| Midnight in the Garden of Good and Evil| John Berendt         | ![Image](http://images.amazon.com/images/P/0679751521.01.LZZZZZZZ.jpg)  | 0.22       |
-| Stand                                  | Stephen King         | ![Image](http://images.amazon.com/images/P/0451160959.01.LZZZZZZZ.jpg)  | 0.20       |
-| Fight Club                             | Chuck Palahniuk      | ![Image](http://images.amazon.com/images/P/0805062971.01.LZZZZZZZ.jpg)  | 0.19       |
-| The Color Purple                       | Alice Walker         | ![Image](http://images.amazon.com/images/P/0671617028.01.LZZZZZZZ.jpg)  | 0.19       |
-| Roll of Thunder, Hear My Cry           | Mildred D. Taylor    | ![Image](http://images.amazon.com/images/P/014034893X.01.LZZZZZZZ.jpg)  | 0.18       |
-| The Catcher in the Rye                 | J.D. Salinger        | ![Image](http://images.amazon.com/images/P/0316769487.01.LZZZZZZZ.jpg)  | 0.18       |
-| To Kill a Mockingbird                  | Harper Lee           | ![Image](http://images.amazon.com/images/P/0446310786.01.LZZZZZZZ.jpg)  | 0.18       |
-| Animal Farm                            | George Orwell        | ![Image](http://images.amazon.com/images/P/0451526341.01.LZZZZZZZ.jpg)  | 0.18       |
+| Title                                  | Author               | Similarity |
+|----------------------------------------|----------------------|------------|
+| Death of A Salesman                   | Arthur Miller         | 0.23       |
+| 1984                                   | George Orwell        | 0.22       |
+| Midnight in the Garden of Good and Evil| John Berendt         | 0.22       |
+| Stand                                  | Stephen King         | 0.20       |
+| Fight Club                             | Chuck Palahniuk      | 0.19       |
+| The Color Purple                       | Alice Walker         | 0.19       |
+| Roll of Thunder, Hear My Cry           | Mildred D. Taylor    | 0.18       |
+| The Catcher in the Rye                 | J.D. Salinger        | 0.18       |
+| To Kill a Mockingbird                  | Harper Lee           | 0.18       |
+| Animal Farm                            | George Orwell        | 0.18       |
 
 
 Dengan hasil yang diberikan di atas berdasarkan judul buku "Lord of the Flies" .
@@ -429,7 +429,7 @@ Recall = False Negative (prediksi negative dan hal tersebut salah)
 
 Perhitungan F1-Score
 
-$$\ F1 = 2* Precision * Recall/(Precision + Recall$$
+$$\ F1 = 2* Precision * Recall/(Precision + Recall)$$
 ~~~
 keterangan:
 TP = True Positif (prediksi positif dan hal tersebut benar)
@@ -444,13 +444,7 @@ TP dihitung dengan menghitung jumlah buku yang ada di kedua set (aktual dan yang
 
 `False Negatives` (FN): Buku yang relevan, namun tidak direkomendasikan (ada di set aktual, tetapi tidak ada di set prediksi). FN dihitung dengan mencari buku-buku yang ada di set aktual tetapi tidak ada di set prediksi.
 
-~~~
 
-~~~
-Output:
-~~~
-
-~~~
 Dari output tersebut dihitung accuracy precision nya adalah
 ```
 Precision: 0.50, Recall: 0.67, F1-Score: 0.57
@@ -497,5 +491,24 @@ Secara keseluruhan, evaluasi metrik ini memberi wawasan yang jelas tentang kekua
 
 ## Referensi
 ---
+- [1] Grand View Research. (n.d.). Books market size, share & trends analysis report. Retrieved from https://www.grandviewresearch.com/industry-analysis/books-market
 
+- [2] Wiley Online Library. (2023). A novel book recommendation system using advanced techniques. International Journal of Intelligent Systems. Retrieved from https://onlinelibrary.wiley.com/doi/10.1155/2023/1514801
+
+- [3] McFarlane, A. (2003). The impact of technology on reading habits. Journal of Educational Computing Research, 29(3). Retrieved from https://www.tandfonline.com/doi/abs/10.1080/14759390300200146
+
+- [4] The Paris Review. (2019). Reading in the age of constant distraction. Retrieved from https://www.theparisreview.org/blog/2019/02/08/reading-in-the-age-of-constant-distraction/
+
+- [5] Invisible Mentor. (n.d.). The art of reading: Francis Bacon's wisdom on consuming books. Retrieved from https://theinvisiblementor.com/the-art-of-reading-francis-bacons-wisdom-on-consuming-books/
+
+- [6] Interact. (n.d.). Information overload: Why it matters and how to combat it. Retrieved from https://www.Interact.org/literature/article/information-overload-whyit-matters-and-how-to-combat-it
+
+- [7] IEEE Xplore. (2015). A study on advanced recommender systems. Retrieved from https://ieeexplore.ieee.org/document/7176109
+
+- [8] ACM Digital Library. (2023). The future of collaborative filtering in recommendation systems. Retrieved from https://dl.acm.org/doi/10.1145/3639233.3639335
+
+- [9] Google Developers. (n.d.). Collaborative filtering basics. Retrieved from https://developers.google.com/machine-learning/recommendation/collaborative/basics?hl=id
+
+- [10] (https://jurnal.uns.ac.id/itsmart/article/download/35008/27748). 
+![68747470733a2f2f692e6962622e636f2f744a58465a58422f696d6167652e706e67](https://github.com/user-attachments/assets/7f8ccd15-83c0-45de-8322-7e0ec8086e96)
 ---Ini adalah bagian akhir laporan---
