@@ -422,19 +422,9 @@ on='ISBN': Parameter on digunakan untuk menentukan kolom yang digunakan sebagai 
 
           ratings_with_name.head():
 
-Fungsi .head() digunakan untuk menampilkan lima baris pertama dari dataset yang baru dihasilkan setelah penggabungan. Ini memberikan gambaran awal tentang data yang sudah digabungkan, dengan informasi tentang rating dan detail buku (judul dan penulis) yang terkait dengan setiap rating.
-Hasil Penggabungan:
-Setelah penggabungan, dataset ratings_with_name akan berisi informasi berikut:
-
-User-ID: ID pengguna yang memberikan rating.
-ISBN: ISBN buku yang diberi rating.
-Book-Rating: Rating yang diberikan oleh pengguna untuk buku tersebut.
-Book-Title: Judul buku.
-Book-Author: Penulis buku.
-Tujuan:
-Proses penggabungan ini memungkinkan untuk menghubungkan informasi rating dengan informasi detail tentang buku, sehingga kita bisa menganalisis lebih lanjut seperti buku mana yang mendapatkan rating tertinggi, atau buku apa yang paling banyak dirating oleh pengguna tertentu.
-
-Secara keseluruhan, penggabungan ini penting untuk memperkaya data rating dengan informasi buku yang lebih lengkap, yang bisa berguna dalam proses analisis atau pembuatan rekomendasi.
+    - Fungsi .head() digunakan untuk menampilkan lima baris pertama dari dataset yang baru dihasilkan setelah penggabungan. Ini memberikan gambaran awal tentang data yang sudah digabungkan, dengan informasi tentang rating dan detail buku (judul dan penulis) yang terkait dengan setiap rating.
+   
+Proses penggabungan ini memungkinkan untuk menghubungkan informasi rating dengan informasi detail tentang buku, sehingga kita bisa menganalisis lebih lanjut seperti buku mana yang mendapatkan rating tertinggi, atau buku apa yang paling banyak dirating oleh pengguna tertentu. Secara keseluruhan, penggabungan ini penting untuk memperkaya data rating dengan informasi buku yang lebih lengkap, yang bisa berguna dalam proses analisis atau pembuatan rekomendasi.
 
 2. Menghitung jumlah rating per pengguna
 
