@@ -238,13 +238,24 @@ Users Dataset:
 
        Untuk penilaian buku, rata-rata adalah 2,87, dengan standar deviasi 3,85, menunjukkan variasi yang signifikan dalam data penilaian. Penilaian berkisar dari 0 (implisit) hingga 10 (eksplisit maksimum). Sebanyak 25% buku memiliki penilaian 0, median (50%) juga berada pada 0, menandakan banyak buku yang tidak dinilai eksplisit, sementara 75% buku memiliki penilaian hingga 7.
 
-       Artinya mayoritas pengguna memberikan penilaian rendah atau tidak memberikan penilaian eksplisit (terlihat dari banyaknya nilai 0 pada Book-Rating). Variasi penilaian buku cukup besar, dengan beberapa buku memiliki penilaian maksimum 10. Distribusi ID pengguna cukup merata dalam dataset.
 
     - **Distribusi Rating Buku**  menampilkan bagaimana rating tersebar, apakah cenderung terkonsentrasi pada nilai tertentu atau tersebar merata.
    
       ![distribusi books ratings](https://github.com/user-attachments/assets/35bf69fa-c1ec-4082-9a86-24e5dbe2805d)
 
+      Artinya mayoritas pengguna memberikan penilaian rendah atau tidak memberikan penilaian eksplisit (terlihat dari banyaknya nilai 0 pada Book-Rating). Variasi penilaian buku cukup besar, dengan beberapa buku memiliki penilaian maksimum 10. Distribusi ID pengguna cukup merata dalam dataset.
 
+        - User-ID:
+          User-ID hanya digunakan sebagai pengenal unik, dan statistik ini memberikan gambaran rentang serta distribusi ID pengguna dalam dataset.
+        
+        - Book-Rating:
+          Median 0 menunjukkan banyak interaksi yang mungkin tidak disertai penilaian eksplisit (misalnya, pengguna berinteraksi dengan buku tetapi tidak memberikan penilaian).
+Rata-rata penilaian (~2,87) menunjukkan kecenderungan ke arah penilaian rendah atau banyak nilai nol dalam dataset.
+Penyebaran nilai (std = 3,85) cukup tinggi, yang berarti pengguna memberikan penilaian dengan rentang yang beragam, dari sangat rendah (0) hingga sangat tinggi (10).
+
+       - Penggunaan:
+         Data ini penting untuk memahami perilaku dan preferensi pengguna. 
+ 
     - **Jumlah Rating per Pengguna** mengidentifikasi pengguna yang paling aktif dalam memberikan rating.
 
       | Rank | User-ID | Ratings Count |
@@ -254,6 +265,16 @@ Users Dataset:
       | 3    | 153662  | 6109          |
       | 4    | 98391   | 5891          |
       | 5    | 35859   | 5850          |
+
+      Tabel tersebut memberikan informasi tentang pengguna dengan jumlah penilaian terbanyak dalam dataset. Berikut adalah arti dari masing-masing kolom:
+
+      - Rank
+        Peringkat pengguna berdasarkan jumlah penilaian yang telah mereka berikan, diurutkan dari yang tertinggi ke terendah.
+
+     - User-ID
+       ID unik untuk setiap pengguna yang diidentifikasi dalam dataset.
+
+       Peringkat 1 (User-ID: 11676) adalah pengguna yang paling aktif dengan memberikan 13.602 penilaian. Peringkat 2 (User-ID: 198711) memberikan 7.550 penilaian, sekitar setengah dari pengguna peringkat pertama. Peringkat lainnya mengikuti dengan jumlah penilaian yang lebih sedikit. Pengguna peringkat atas (misalnya, User-ID: 11676) mungkin merupakan pengguna yang sangat aktif dan dapat memiliki pengaruh besar pada pola rekomendasi.
 
 
     - **Buku Paling Populer** menunjukkan buku yang paling banyak mendapatkan rating dari pengguna.
@@ -266,8 +287,17 @@ Users Dataset:
       | 4    | 0060928336 | 732           |
       | 5    | 0312195516 | 723           |
 
+         - Buku Populer: 
+           Buku dengan ISBN 0971880107 adalah yang paling populer, mendapatkan 2.502 penilaian, hampir dua kali lipat dibanding buku kedua (1.295 penilaian). Buku-buku populer mungkin memiliki daya tarik universal atau dipengaruhi oleh faktor eksternal seperti adaptasi film atau kampanye pemasaran.
+           
+         - Ketimpangan Popularitas:
+           Buku terpopuler mendapatkan jumlah penilaian yang jauh lebih tinggi dibanding buku lainnya, menunjukkan bahwa tidak semua buku memiliki tingkat interaksi yang sama.
+           
+         - Pengaruh Buku Populer:
+           Buku populer mungkin mendominasi rekomendasi sistem, terutama dalam pendekatan item-based collaborative filtering, karena lebih banyak data tersedia untuk menentukan kemiripan.
 
-6. Relationships and Trends
+           
+5. Relationships and Trends
    
 - **Menggabungkan Rating dengan Buku** memungkinkan kita untuk mendapatkan informasi yang lebih lengkap dengan menghubungkan data rating dengan data buku.
   
@@ -286,16 +316,59 @@ Users Dataset:
   | 9    | The Red Tent (Bestselling Backlist)             | 723           |
   | 10   | Angels &amp; Demons                             | 670           |
 
-  
+     - Dominasi Buku Populer:
+       "Wild Animus" menduduki peringkat pertama dengan 2.502 penilaian, jauh lebih tinggi dibanding buku peringkat kedua, "The Lovely Bones: A Novel" (1.295 penilaian). Ini menunjukkan bahwa buku ini memiliki daya tarik atau eksposur yang sangat besar di antara pembaca.
+       
+     - Popularitas
+       Buku-buku dalam daftar ini cenderung berasal dari genre fiksi populer, seperti thriller (The Da Vinci Code, Angels & Demons), drama keluarga (The Lovely Bones, The Red Tent), atau pengalaman personal (Bridget Jones's Diary, The Nanny Diaries). Ini menunjukkan bahwa genre-genre ini menarik minat pembaca yang luas.
+       
+     - Kaitan dengan adaptasi media
+       Beberapa buku dalam daftar, seperti "The Lovely Bones", "The Da Vinci Code", dan "Bridget Jones's Diary", memiliki adaptasi film atau seri yang mungkin meningkatkan popularitas mereka, terutama di kalangan pengguna platform rating buku.
+       
+     - Relevansi
+       Buku-buku dengan jumlah penilaian tinggi cenderung menjadi referensi penting dalam sistem rekomendasi berbasis item (item-based collaborative filtering), karena data interaksi yang banyak membantu dalam menghitung kemiripan dengan buku lain. Buku-buku ini juga kemungkinan sering direkomendasikan, sehingga meningkatkan peluang pembaca untuk menemukannya.
+       
+     - Kesenjangan popularitas buku
+       Buku di peringkat pertama memiliki hampir 2 kali lipat jumlah penilaian dibanding peringkat kedua, dan lebih dari 3 kali lipat jumlah penilaian dibanding peringkat kesepuluh. Ini menunjukkan bahwa ada ketimpangan popularitas, di mana beberapa buku mendominasi perhatian pembaca.
+       
+     - Trend minat pembaca
+       Buku-buku ini dapat memberikan gambaran tren atau preferensi pembaca selama periode data dikumpulkan. Buku seperti "The Da Vinci Code" dan "The Lovely Bones" mencerminkan daya tarik cerita yang kompleks, emosional, dan berbasis karakter.
+       
+
 - **Visualisasi Buku dengan Rating Terbanyak** mempermudah pemahaman tentang buku populer dengan menggunakan grafik batang.
 
   ![grafik most ratings](https://github.com/user-attachments/assets/9f1ef800-2f47-465a-8211-905506ff8bad)
 
+   - Dominasi "Wild Animus":
+     Buku "Wild Animus" mendominasi daftar dengan 2.502 penilaian, hampir dua kali lipat dibandingkan buku peringkat kedua, "The Lovely Bones: A Novel" (1.295). Dominasi ini menunjukkan buku tersebut memiliki jangkauan luas (misalnya melalui promosi besar-besaran atau distribusi gratis) atau memiliki daya tarik yang kuat bagi pembaca.
+   - Popularitas Judul Fiksi:
+     Sebagian besar buku dalam daftar adalah karya fiksi dengan narasi yang menarik, seperti genre misteri/thriller (The Da Vinci Code, Angels & Demons), drama (The Lovely Bones, The Red Tent), dan humor (Bridget Jones's Diary). Hal ini menekankan preferensi pembaca terhadap cerita yang menghibur dan emosional.
+   - Kaitan dengan Adaptasi Media Populer:
+     Beberapa buku dalam daftar telah diadaptasi menjadi film atau acara TV yang sukses, seperti:
+      - The Lovely Bones: A Novel
+      - The Da Vinci Code
+      - Bridget Jones's Diary
+      - The Secret Life of Bees
+      - Divine Secrets of the Ya-Ya Sisterhood
+        Adaptasi ini kemungkinan besar meningkatkan popularitas dan visibilitas buku-buku tersebut, sehingga mendapatkan lebih banyak penilaian.
+
+  - Preferensi Tema Emosional dan Relatable:
+    Buku seperti "The Lovely Bones", "A Painted House", dan "The Red Tent" membahas perjuangan pribadi, drama keluarga, dan tema emosional. Hal ini menunjukkan bahwa pembaca cenderung menyukai cerita yang mengeksplorasi hubungan manusia dan pengalaman hidup.
+    
+  - Perpaduan Bacaan Ringan dan Serius:
+    Daftar ini mencakup campuran humor ringan (Bridget Jones's Diary, The Nanny Diaries) dan tema serius (The Lovely Bones, The Red Tent), yang menunjukkan keberagaman minat di antara pembaca.
+    
+  - Relevansi dalam Sistem Rekomendasi:
+    Buku-buku ini mendapatkan interaksi pengguna yang signifikan, sehingga menjadi kandidat potensial untuk memengaruhi algoritma rekomendasi dalam model collaborative filtering. Tingginya tingkat interaksi meningkatkan kemungkinan buku-buku ini direkomendasikan kepada pengguna lain dengan selera yang serupa.
+
+  - Ketimpangan Popularitas:
+    Terdapat kesenjangan yang jelas antara "Wild Animus" dan buku-buku lainnya dalam hal jumlah penilaian. Kesenjangan ini menyoroti distribusi perhatian yang tidak merata di antara buku-buku populer, di mana hanya beberapa judul yang mendominasi preferensi pembaca.
   
 - **Distribusi Usia Pengguna** membantu kita memahami demografi pengguna dalam hal usia, yang bisa berguna untuk analisis lebih lanjut, seperti apakah ada kategori usia tertentu yang lebih banyak memberikan rating.
 
 ![Usia](https://github.com/user-attachments/assets/0c2534c1-7bcc-4c64-b145-4acb194a0184)
 
+   
 - **Wawasan dari Metadata**
   - **Top Penulis** dengan Buku Terbanyak memberikan informasi tentang penulis yang memiliki kontribusi terbesar dalam jumlah buku yang ada dalam dataset.
 
@@ -311,7 +384,11 @@ Users Dataset:
   | 8    | Nora Roberts          | 315             |
   | 9    | Barbara Cartland      | 307             |
   | 10   | Charles Dickens       | 302             |
-    
+
+     - Dominasi Genre: Daftar ini didominasi oleh penulis di genre seperti misteri (Agatha Christie, Carolyn Keene), romansa (Barbara Cartland, Nora Roberts), buku remaja (Ann M. Martin, Francine Pascal), dan fiksi ilmiah (Isaac Asimov, Stephen King).
+     - Penulis Prolifik: Penulis-penulis ini telah menghasilkan karya dalam jumlah besar, dengan beberapa (seperti Agatha Christie dan William Shakespeare) menyumbangkan banyak adaptasi, koleksi, dan karya-karya pasca-meninggal yang menambah jumlah buku mereka.
+     - Warisan dan Popularitas: Penulis-penulis dalam daftar ini memiliki dampak yang besar dalam genre mereka masing-masing, dengan karya-karya mereka banyak diterbitkan, diterjemahkan, dan diterbitkan ulang di berbagai generasi.
+
   - **Visualisasi Penulis Teratas dengan Buku Terbanyak** memungkinkan kita untuk melihat secara grafis siapa saja penulis yang paling produktif, sehingga memudahkan analisis lebih lanjut tentang popularitas dan kontribusi penulis tersebut terhadap koleksi buku.
    
 ![10 author with most books](https://github.com/user-attachments/assets/5f715e4b-d3cc-4c75-b5d7-32eee932eda0)
@@ -424,12 +501,34 @@ on='ISBN': Parameter on digunakan untuk menentukan kolom yang digunakan sebagai 
 
     - Fungsi .head() digunakan untuk menampilkan lima baris pertama dari dataset yang baru dihasilkan setelah penggabungan. Ini memberikan gambaran awal tentang data yang sudah digabungkan, dengan informasi tentang rating dan detail buku (judul dan penulis) yang terkait dengan setiap rating.
    
-Proses penggabungan ini memungkinkan untuk menghubungkan informasi rating dengan informasi detail tentang buku, sehingga kita bisa menganalisis lebih lanjut seperti buku mana yang mendapatkan rating tertinggi, atau buku apa yang paling banyak dirating oleh pengguna tertentu. Secara keseluruhan, penggabungan ini penting untuk memperkaya data rating dengan informasi buku yang lebih lengkap, yang bisa berguna dalam proses analisis atau pembuatan rekomendasi.
+    Proses penggabungan ini memungkinkan untuk menghubungkan informasi rating dengan informasi detail tentang buku, sehingga kita bisa menganalisis lebih lanjut seperti buku mana yang mendapatkan rating tertinggi, atau buku apa yang paling banyak dirating oleh pengguna tertentu. Secara keseluruhan, penggabungan ini penting untuk memperkaya data rating dengan informasi buku yang lebih lengkap, yang bisa berguna dalam proses analisis atau pembuatan rekomendasi.
+
+   
+| User-ID | ISBN        | Book-Rating | Book-Title                                    | Book-Author       | Year-Of-Publication | Publisher                     | Image-URL-S                                     | Image-URL-M                                     | Image-URL-L                                     |
+|---------|-------------|-------------|------------------------------------------------|-------------------|---------------------|-------------------------------|-------------------------------------------------|-------------------------------------------------|-------------------------------------------------|
+| 276725  | 034545104X  | 0           | Flesh Tones: A Novel                          | M. J. Rose        | 2002                | Ballantine Books              | http://images.amazon.com/images/P/034545104X.0... | http://images.amazon.com/images/P/034545104X.0... | http://images.amazon.com/images/P/034545104X.0... |
+| 276726  | 0155061224  | 5           | Rites of Passage                              | Judith Rae        | 2001                | Heinle                        | http://images.amazon.com/images/P/0155061224.0... | http://images.amazon.com/images/P/0155061224.0... | http://images.amazon.com/images/P/0155061224.0... |
+| 276727  | 0446520802  | 0           | The Notebook                                  | Nicholas Sparks   | 1996                | Warner Books                  | http://images.amazon.com/images/P/0446520802.0... | http://images.amazon.com/images/P/0446520802.0... | http://images.amazon.com/images/P/0446520802.0... |
+| 276729  | 052165615X  | 3           | Help!: Level 1                                | Philip Prowse     | 1999                | Cambridge University Press     | http://images.amazon.com/images/P/052165615X.0... | http://images.amazon.com/images/P/052165615X.0... | http://images.amazon.com/images/P/052165615X.0... |
+| 276729  | 0521795028  | 6           | The Amsterdam Connection : Level 4 (Cambridge)| Sue Leather       | 2001                | Cambridge University Press     | http://images.amazon.com/images/P/0521795028.0... | http://images.amazon.com/images/P/0521795028.0... | http://images.amazon.com/images/P/0521795028.0... |
+
 
 2. Menghitung jumlah rating per pengguna
 
          user_rating_counts = ratings_with_name.groupby('User-ID').size()
 
+   Kode ini digunakan untuk menghitung jumlah rating yang diberikan oleh setiap pengguna (User-ID) dalam dataset yang sudah digabungkan antara ratings dan informasi buku (ratings_with_name). Hasilnya adalah jumlah rating yang diberikan oleh masing-masing pengguna.
+
+   Penjelasan Langkah demi Langkah:
+       -  **`ratings_with_name.groupby('User-ID')`:**
+          - Fungsi `groupby()` digunakan untuk mengelompokkan data berdasarkan kolom tertentu. Dalam hal ini, data dikelompokkan berdasarkan kolom `'User-ID'`, yaitu ID unik dari setiap pengguna.
+          - Setiap grup yang dihasilkan adalah data dari satu pengguna, berisi semua rating yang diberikan oleh pengguna tersebut.
+       - **`size()`:**
+          - Fungsi `size()` digunakan untuk menghitung jumlah elemen (atau baris) dalam setiap grup yang telah dibuat oleh `groupby()`.
+          - Dalam hal ini, untuk setiap **User-ID**, `size()` akan menghitung berapa banyak rating yang telah diberikan oleh pengguna tersebut.
+       - **`user_rating_counts =`:**
+          - Hasil dari operasi ini akan disimpan dalam variabel `user_rating_counts`.
+          - `user_rating_counts` adalah sebuah **Series** di mana indeksnya adalah **User-ID**, dan nilainya adalah **jumlah rating** yang diberikan oleh masing-masing penggu
    
 3. Memilih pengguna aktif
 
@@ -450,18 +549,92 @@ Proses penggabungan ini memungkinkan untuk menghubungkan informasi rating dengan
        (ratings_with_name['Book-Title'].isin(famous_books))]
    
 7. Membuat pivot table
+   Kode yang digunakan adalah :
+   
+        # Create a pivot table with Users on rows, Books on columns, and ratings as values
+         pivot_table = filtered_ratings.pivot_table(index='Book-Title', columns='User-ID', values='Book-Rating', aggfunc='mean')
+         pivot_table.fillna(0, inplace=True)
+         pivot_table.head()
 
-       # Create a pivot table with Users on rows, Books on columns, and ratings as values
-       pivot_table = filtered_ratings.pivot_table(index='Book-Title', columns='User-ID', values='Book-Rating', aggfunc='mean')
-       pivot_table.fillna(0, inplace=True)
+   - Tujuan:
+      Kode ini bertujuan untuk membuat sebuah pivot table dari data rating buku, di mana:
+      - Baris (rows) berisi judul buku (Book-Title).
+      - Kolom berisi ID pengguna (User-ID).
+      - Nilai (values) adalah rating buku yang diberikan oleh pengguna tersebut (Book-Rating), dengan menggunakan nilai rata-rata (mean) untuk setiap kombinasi buku dan pengguna.
+        
+   - Proses:
 
-8. Membuat model kesamaan (_SImiliarity_)
+      `filtered_ratings.pivot_table(...):`
+
+      Fungsi pivot_table digunakan untuk membuat pivot table dari DataFrame `filtered_ratings`. Fungsi ini mengelompokkan data berdasarkan kolom yang ditentukan.
+      - index='Book-Title': Ini menentukan bahwa setiap baris pivot table akan mewakili judul buku.
+      - columns='User-ID': Ini menentukan bahwa setiap kolom pivot table akan mewakili ID pengguna.
+      - values='Book-Rating': Ini adalah kolom yang akan dihitung dan dimasukkan ke dalam pivot table, yaitu nilai rating yang diberikan oleh pengguna untuk setiap buku.
+      - aggfunc='mean': Ini menentukan fungsi agregat yang digunakan untuk menghitung nilai-nilai dalam pivot table. Dalam hal ini, digunakan fungsi rata-rata (mean), yang menghitung rata-rata rating yang diberikan oleh pengguna untuk setiap buku.
+
+   - Mengisi Nilai yang Hilang:
+
+     `pivot_table.fillna(0, inplace=True)`
+     
+     Setelah pivot table dibuat, ada kemungkinan beberapa sel dalam tabel tersebut kosong (misalnya, jika seorang pengguna belum memberi rating untuk suatu buku). Fungsi fillna(0) digunakan untuk mengganti nilai-nilai kosong ini dengan angka 0. Ini dilakukan dengan parameter inplace=True, yang berarti perubahan dilakukan langsung pada pivot_table tanpa perlu membuat salinan baru.
+     
+   - Melihat Hasil:
+
+     `pivot_table.head()`
+
+     Fungsi ini digunakan untuk menampilkan 5 baris pertama dari pivot table yang baru dibuat, agar bisa melihat contoh data yang dihasilkan. Pivot table ini memberikan gambaran yang jelas tentang bagaimana setiap pengguna menilai setiap buku, yang berguna untuk analisis lebih lanjut seperti rekomendasi buku atau identifikasi pola preferensi pengguna.
+
+ 8. Membuat model kesamaan (_SImiliarity_)
 
         # Compute cosine similarity for the books
         similarity_scores = cosine_similarity(pivot_table)
+
+   berisi skor kemiripan antara buku yang dimasukkan dan semua buku lainnya.
    
-9. Fungsi Rekomendasi
-   Fungsi dirancang untuk merekomendasikan buku kepada pengguna berdasarkan content-based filtering, dengan memanfaatkan skor kesamaan antar buku. Pendekatan ini sangat berguna untuk sistem rekomendasi buku yang dipersonalisasi. 
+9. Membuat Data Frame kemudahan interpretasi
+   Mengonversi hasil cosine similarity menjadi DataFrame agar lebih mudah dibaca dan diinterpretasikan.
+
+10. Fungsi Rekomendasi
+    Fungsi dirancang untuk merekomendasikan buku kepada pengguna berdasarkan content-based filtering, dengan memanfaatkan skor kesamaan antar buku. Pendekatan ini sangat berguna untuk sistem rekomendasi buku yang dipersonalisasi.
+
+         # Function to recommend books based on item-based collaborative filtering 
+         def recommend_item_based(book_name, top_n=10):
+         """
+         Recommend top_n books similar to the input book_name using item-based collaborative filtering.
+         """
+         if book_name not in item_similarity_df.index:
+        return f"Book '{book_name}' not found in dataset."
+
+        # Get similarity scores for the given book
+        similar_items = item_similarity_df[book_name]
+
+        # Sort by similarity score (descending order) and get top N most similar books
+        similar_items_sorted = similar_items.sort_values(ascending=False)[1:top_n+1]
+
+        # Prepare the recommendations
+        recommendations = []
+        for similar_book, score in similar_items_sorted.items():
+        book_details = books[books['Book-Title'] == similar_book].iloc[0]
+        recommendations.append({
+            'Book Title': similar_book,
+            'Author': book_details['Book-Author'],
+            'Image URL': book_details['Image-URL-L'],
+            'Similarity Score': score
+        })
+
+        return recommendations
+
+        # Example usage: Get top 10 recommendations for 'Lord of the Flies'
+        recommended_books = recommend_item_based('Lord of the Flies', top_n=10)
+
+
+ Fungsi `recommend_item_based` bertujuan untuk memberikan rekomendasi buku yang mirip berdasarkan buku yang dimasukkan oleh pengguna. Fungsi ini menerima dua parameter utama, yaitu book_name (nama buku yang ingin dicari rekomendasinya) dan top_n (jumlah rekomendasi buku yang ingin ditampilkan). Pertama, fungsi akan mengecek apakah nama buku yang diminta ada dalam DataFrame item_similarity_df. Jika tidak ditemukan, maka fungsi akan mengembalikan pesan kesalahan.
+
+Selanjutnya, fungsi mendapatkan skor kemiripan antara buku yang dimasukkan dengan semua buku lainnya melalui `similar_items = item_similarity_df[book_name]`. Skor-skor ini diurutkan dalam urutan menurun menggunakan `sort_values(ascending=False)`, kemudian hanya mengambil top_n buku teratas dengan mengabaikan buku yang diminta sendiri melalui [1:top_n+1].
+
+Untuk setiap buku yang mirip, detail seperti judul buku, nama pengarang, URL gambar, dan skor kemiripan dikumpulkan ke dalam daftar rekomendasi dengan melakukan iterasi pada hasil yang telah diurutkan. Informasi ini diperoleh dari DataFrame buku dengan kode `books[books['Book-Title'] == similar_book].iloc[0]`.
+
+Terakhir, fungsi mengembalikan daftar rekomendasi buku dalam bentuk list dictionary yang berisi detail lengkap setiap buku. Sebagai contoh, fungsi dapat dipanggil dengan `recommend_item_based('Lord of the Flies', top_n=10)` untuk mendapatkan 10 rekomendasi buku yang paling mirip dengan buku "Lord of the Flies".
 
 Parameter penting yang dipakai dalam fungsi ini adalah : 
 
@@ -534,45 +707,49 @@ TP dihitung dengan menghitung jumlah buku yang ada di kedua set (aktual dan yang
 
 Dari output tersebut dihitung accuracy precision nya adalah
 ```
-Precision: 0.50, Recall: 0.67, F1-Score: 0.57
-True Positives: 3, False Positives: 3, False Negatives: 2
+Average Precision: 0.0667
+Average Recall: 0.2222
+F1 Score: 0.1026
+Total True Positives (TP): 2
+Total False Positives (FP): 28
+Total False Negatives (FN): 5
 
 ```
-**Precision (0.50)**:
-
-*Precision* mengukur seberapa tepat rekomendasi yang diberikan. Dalam konteks ini, precision 0.50 berarti bahwa setengah dari buku yang direkomendasikan benar-benar relevan dengan preferensi pengguna. Dengan kata lain, dari 6 buku yang direkomendasikan (3 TP + 3 FP), hanya 3 buku yang relevan.
-
-**Recall (0.67)**:
-
-*Recall* mengukur seberapa banyak buku yang seharusnya direkomendasikan (relevan) berhasil ditemukan dan direkomendasikan. Recall 0.67 berarti bahwa 67% dari buku relevan yang seharusnya direkomendasikan telah berhasil ditemukan dan disarankan oleh sistem. Dari 5 buku relevan yang ada (3 TP + 2 FN), 3 di antaranya berhasil direkomendasikan.
-
-**F1-Score (0.57)**:
-
-*F1-Score* adalah rata-rata harmonik antara precision dan recall. F1-Score 0.57 menunjukkan bahwa sistem memiliki keseimbangan yang cukup antara precision dan recall. Skor ini menunjukkan kinerja yang moderat, dengan ruang untuk perbaikan di kedua metrik tersebut.
-True Positives (TP = 3):
-
 **Dampak Terhadap Business Understanding**
 
-1. Precision (0.50)
-Precision yang lebih rendah (0.50) menunjukkan bahwa setengah dari rekomendasi yang diberikan kepada pengguna tidak relevan, karena ada banyak False Positives (rekomendasi yang tidak sesuai dengan preferensi pengguna). Hal ini bisa menurunkan kepuasan pelanggan karena mereka mendapatkan banyak rekomendasi yang tidak mereka inginkan atau butuhkan.
+**Precision Rata-rata (0.0667)**:
+Hanya 6,67% dari rekomendasi yang diberikan bersifat relevan bagi pengguna.
+Precision yang rendah menunjukkan sistem sering merekomendasikan item yang tidak sesuai dengan kebutuhan pengguna.
+Recall Rata-rata (0.2222):
 
-2. Recall (0.67)
-Recall yang lebih tinggi (0.67) menunjukkan bahwa model mampu menangkap sebagian besar item yang relevan dari seluruh actual ratings. Ini berarti meskipun ada beberapa rekomendasi yang salah, sistem masih berhasil mencakup banyak item yang benar-benar relevan bagi pengguna.
+**Sistem berhasil mengambil 22,22%** dari semua item relevan yang tersedia.
+Meskipun recall lebih tinggi dibandingkan precision, ini menunjukkan sistem masih gagal menangkap sebagian besar item relevan.
 
-3. F1-Score (0.57)
-F1-Score yang moderat (0.57) menunjukkan adanya kompromi antara precision dan recall. Meskipun model memberikan beberapa rekomendasi yang relevan, ada juga kekurangan dalam hal menghindari false positives dan false negatives.
+**F1 Score (0.1026)**:
+Nilai rata-rata harmonis antara precision dan recall yang sangat rendah mengindikasikan ketidakseimbangan atau ketidakefisienan dalam kinerja sistem.
+Nilai Confusion Matrix:
 
- 
+**True Positives** (TP = 2): Hanya 2 item relevan yang direkomendasikan dengan benar.
+**False Positives** (FP = 28): Sebanyak 28 item yang tidak relevan direkomendasikan, menciptakan kebisingan bagi pengguna.
+**False Negatives** (FN = 5): Sebanyak 5 item relevan terlewatkan, yang dapat menurunkan kepuasan pengguna.
 
-**Dampak pada Business**:
+**Dampak pada bisnis**
+   - Pengalaman Pengguna yang Negatif:
+      - Precision yang rendah dan tingginya jumlah false positives dapat membuat pengguna frustrasi karena merasa sistem tidak relevan atau tidak efektif.
+      - Item relevan yang terlewatkan (false negatives) dapat mengurangi kepuasan pengguna terhadap rekomendasi.
+     
+   - Peluang Pendapatan yang Hilang:
+      - False negatives menunjukkan peluang yang terlewat untuk mempromosikan produk atau konten yang mungkin akan dibeli atau digunakan oleh pengguna.
+      - False positives dapat mengurangi minat pengguna untuk mengeksplorasi rekomendasi lebih lanjut, yang pada akhirnya berdampak pada penurunan penjualan atau metrik keterlibatan.
 
-**Pengalaman Pengguna**: Hasil ini menunjukkan bahwa pengalaman pengguna masih bisa ditingkatkan. Precision yang lebih rendah dapat menyebabkan frustrasi jika pengguna menerima terlalu banyak rekomendasi yang tidak sesuai. Oleh karena itu, bisnis perlu memperbaiki model untuk meningkatkan relevansi rekomendasi.
+  - Potensi Kerusakan Reputasi:
+     - Paparan berulang terhadap rekomendasi yang tidak relevan dapat merusak reputasi platform, sehingga mengurangi kepercayaan dan loyalitas pengguna.
+       
+   - Peluang Perbaikan:
+     Evaluasi ini menunjukkan perlunya algoritma yang lebih baik, seperti peningkatan teknik collaborative filtering, rekomendasi berbasis konten, atau pendekatan hybrid untuk meningkatkan precision dan recall. Fokus utama harus diarahkan pada peningkatan true positives sambil meminimalkan false positives untuk mencapai tujuan bisnis.
 
-**Keputusan Pengelolaan Produk**: Bisnis dapat memutuskan untuk mengoptimalkan algoritma rekomendasi untuk memperbaiki algoritma filtering atau menggunakan data yang lebih banyak dan lebih baik untuk meningkatkan akurasi rekomendasi.
 
-**Keuntungan Finansial**: Dengan meningkatkan precision dan recall, perusahaan dapat meningkatkan peluang untuk penjualan dan monetisasi produk yang lebih relevan, serta meningkatkan loyalitas pelanggan.
-
-Secara keseluruhan, evaluasi metrik ini memberi wawasan yang jelas tentang kekuatan dan kelemahan model rekomendasi. Dengan memperbaiki precision dan recall, perusahaan dapat menciptakan pengalaman yang lebih baik untuk pengguna dan mendorong hasil bisnis yang lebih optimal.   
+Agar sistem rekomendasi dapat memberikan manfaat optimal bagi bisnis, perlu dilakukan upaya untuk meningkatkan precision (rekomendasi yang relevan) sambil mempertahankan atau sedikit meningkatkan recall. Peningkatan algoritma, pengoptimalan hyperparameter, serta pemanfaatan umpan balik pengguna dapat membantu meningkatkan kinerja sistem, sehingga berdampak positif pada kepuasan pengguna, retensi, dan pendapatan.
 
 
 
@@ -596,6 +773,6 @@ Secara keseluruhan, evaluasi metrik ini memberi wawasan yang jelas tentang kekua
 
 - [9] Google Developers. (n.d.). Collaborative filtering basics. Retrieved from https://developers.google.com/machine-learning/recommendation/collaborative/basics?hl=id
 
-- [10] (https://jurnal.uns.ac.id/itsmart/article/download/35008/27748). 
-![68747470733a2f2f692e6962622e636f2f744a58465a58422f696d6167652e706e67](https://github.com/user-attachments/assets/7f8ccd15-83c0-45de-8322-7e0ec8086e96)
+- [10] (https://jurnal.uns.ac.id/itsmart/article/download/35008/27748).
+  
 ---Ini adalah bagian akhir laporan---
