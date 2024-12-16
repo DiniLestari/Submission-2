@@ -91,11 +91,25 @@ Jenis dan Ukuran Berkas | csv (73.29 MB), csv (22.63 MB), csv (11.62)
 
 _Book-Crossing dataset_ terdiri dari tiga berkas berikut:
 
-**Users.csv**: Berisi data pengguna dengan ID pengguna (User-ID) yang telah dianonimkan dan dipetakan ke angka-angka. Data demografis seperti Lokasi dan Usia disediakan jika tersedia. Jika tidak ada, kolom-kolom ini akan berisi nilai NULL.
+**Users.csv**: Berisi data pengguna dengan ID pengguna (User-ID) yang telah dianonimkan dan dipetakan ke angka-angka. Data demografis seperti Lokasi dan Usia disediakan jika tersedia. Jika tidak ada, kolom-kolom ini akan berisi nilai NULL. Dalam `User.csv` terdapat delapan kolom yaitu ;
+   - `User-ID`           : Berisi data pengguna dengan ID pengguna (User-ID)
+   - `Location`          : Data demografis dari tempat tinggal User
+   - `Age`               : Umur User
 
-**Books.csv**: Buku diidentifikasi dengan ISBN masing-masing. ISBN yang tidak valid telah dihapus dari dataset. Selain itu, informasi berbasis konten diberikan (Judul Buku, Penulis Buku, Tahun Terbit, Penerbit), yang diperoleh dari layanan Amazon Web Services. Jika sebuah buku memiliki beberapa penulis, hanya penulis pertama yang tercantum. URL yang mengarah ke gambar sampul buku juga disediakan dalam tiga ukuran berbeda (Image-URL-S, Image-URL-M, Image-URL-L), yaitu kecil, sedang, dan besar. URL ini mengarah ke situs web Amazon.
+**Books.csv**: Buku diidentifikasi dengan ISBN masing-masing. ISBN yang tidak valid telah dihapus dari dataset. Selain itu, informasi berbasis konten diberikan (Judul Buku, Penulis Buku, Tahun Terbit, Penerbit), yang diperoleh dari layanan Amazon Web Services. Jika sebuah buku memiliki beberapa penulis, hanya penulis pertama yang tercantum. URL yang mengarah ke gambar sampul buku juga disediakan dalam tiga ukuran berbeda (Image-URL-S, Image-URL-M, Image-URL-L), yaitu kecil, sedang, dan besar. URL ini mengarah ke situs web Amazon. 
+   - `ISBN`                : ISBN (*International Standard Book Number*) adalah kode pengidentifikasian buku yang bersifat unik. ISBN terdiri dari 13 digit angka yang berisi informasi tentang judul, penerbit, dan kelompok penerbit. ISBN memiliki beberapa fungsi, di antaranya: Memberikan identitas unik pada satu judul buku, Membantu memperlancar distribusi buku, Sebagai sarana promosi bagi penerbit.
+   - `Book-Title`          : Judul buku
+   - `Book-Author`         : Nama penulis buku
+   - `Year-Of-Publication` : Tahun terbit
+   - `Publisher`           : Nama atau perusahaan penerbit
+   - `Image-URL-S`         : Alamat dari gambar halaman sampul buku di Amazon berukuran S
+   - `Image-URL-M`         : Alamat dari gambar halaman sampul buku di Amazon berukuran M
+   - `Image-URL-L`         : Alamat dari gambar halaman sampul buku di Amazon berukuran L
 
 **Ratings.csv**: Berisi informasi penilaian buku. Penilaian (Book-Rating) dapat berupa penilaian eksplisit yang diberikan pada skala 1-10 (nilai yang lebih tinggi menunjukkan apresiasi yang lebih tinggi), atau penilaian implisit yang diberikan dengan angka 0.
+   - `User-ID`           : Berisi data pengguna dengan ID pengguna (User-ID)
+   - `ISBN`              : ISBN (*International Standard Book Number*) untuk tiap buku
+   - `Ratings`           : penilaian implisit yang diberikan oleh pengguna (User)
 
 Langkah-langkah yang diambil dalam untuk mendapat insight dari tahap data understanding adalah :
 
@@ -431,62 +445,24 @@ Berikut adalah tahapan-tahapan dalam melakukan Persiapan data:
     | Ratings            | (1,149,780, 3)     | (1,149,780, 3)     |
  
 
-2. Pembersihan Data
-
-      a. Cek Nilai Kosong
-
+2. Cek Nilai Kosong
                  books.isnull().sum(), ratings.isnull().sum(), users.isnull().sum()
 
       - **Fungsi**  : Mengecek jumlah nilai kosong (missing values) di setiap kolom dari tiga dataset utama: books, ratings, dan users.
       - **Manfaat** : Dengan mengetahui nilai kosong, kita dapat merencanakan bagaimana menangani data yang hilang agar dataset tetap relevan dan bersih.
         
-      b. Mengisi Missing Value di kolong `Book-Author` dan `Publisher`. Kode ini bertujuan untuk membersihkan dataset dengan mengisi nilai yang hilang pada beberapa kolom, menghapus entri duplikat, serta menghapus pengguna dengan data yang tidak lengkap (seperti usia yang hilang). Pada akhirnya, ukuran dataset yang telah diproses dibandingkan dengan dataset asli untuk memastikan langkah pembersihan dilakukan dengan benar tanpa kehilangan data yang terlalu banyak.
+
+3.  Mengisi Missing Value di kolong `Book-Author` dan `Publisher`. Kode ini bertujuan untuk membersihkan dataset dengan mengisi nilai yang hilang pada beberapa kolom, menghapus entri duplikat, serta menghapus pengguna dengan data yang tidak lengkap (seperti usia yang hilang). Pada akhirnya, ukuran dataset yang telah diproses dibandingkan dengan dataset asli untuk memastikan langkah pembersihan dilakukan dengan benar tanpa kehilangan data yang terlalu banyak.
 
         # Fill missing book author and publisher with 'Unknown' (for simplicity)
         books['Book-Author'] = books['Book-Author'].fillna('Unknown')
         books['Publisher'] = books['Publisher'].fillna('Unknown')
 
+ 4. Menggabungkan data
 
-      c. Menggabungkan data
-      Penggabungkan (merge) dua dataset: ratings (berisi informasi tentang penilaian buku oleh pengguna).
-books (berisi detail buku seperti judul, penulis, dan penerbit).Penggabungan dilakukan berdasarkan kolom ISBN, yang bertindak sebagai identifier unik untuk setiap buku.
-
-      Hanya data yang memiliki nilai yang cocok di kedua tabel pada kolom ISBN yang akan disertakan dalam dataset gabungan. Hal ini menghasilkan dataset baru bernama `ratings_with_name`: yang berisi data penilaian dari ratings (seperti `User-ID` dan `Book-Rating`).
-Ditambah dengan informasi tambahan dari books (seperti `Book-Title`, `Book-Author`, `Publisher`, dan `gambar buku`).
-      
-            # Merging ratings with book information
-            ratings_with_name = ratings.merge(books, on='ISBN')
-     
-# Modeling
----
-Setelah dilakukan pra-pemrosesan pada dataset, langkah selanjutnya adalah *modeling* terhadap data. Pada tahap ini Model machine learning yang digunakan pada sistem rekomendasi ini adalah model _Item-Based Collaborative filtering_ dengan _simlarity measure_ yang digunakan adalah _Cosine Similarity_.. 
-
-_Item-Based Collaborative Filtering_ adalah salah satu teknik dalam sistem rekomendasi yang menggunakan data perilaku pengguna untuk memberikan rekomendasi. Prinsip utamanya adalah memanfaatkan pola interaksi pengguna dengan item (misalnya buku, film, atau produk) untuk menyarankan item baru berdasarkan preferensi serupa. 
-
-Metode ini berfokus pada pencarian seberapa mirip buku-buku yang berbeda dengan membandingkan pola rating dari buku-buku tersebut (yaitu, rating yang diberikan oleh semua pengguna). Pada penggunaanya dalam kode, **item-based collaborative filtering** tidak berfokus pada pertimbangan konten buku melainkan berfokus pada interaksi pengguna-item.
-
-Sedangkan _cosine similarity_ adalah salah satu teknik mengukur kesamaan yang bekerja dengan mengukur kesamaan antara dua vektor (pada kasus ini rating yang diberikan oleh pengguna) dan menentukan apakah kedua vektor tersebut menunjuk ke arah yang sama dengan menghitung sudut cosinus antara dua vektor. Semakin kecil sudut cosinus, semakin besar nilai _cosine similarity_.
-
-cara kerja dari fungsi *cosine similiraty* yaitu dengan melakukan perhitungan yang sering digunakan untuk menghitung kemiripan diantara item-item [[11]](https://jurnal.uns.ac.id/itsmart/article/download/35008/27748). Secara umum, fungsi similarity adalah fungsi yang menerima dua buah obyek berupa bilangan riil (0 dan 1) dan mengembalikan nilai kemiripan (similarity) antara kedua obyek tersebut berupa bilangan riil. Cosine similarity merupakan salah satu metode pengukuran kemiripan yang populer. Metode ini digunakan untuk menghitung nilai kosinus sudut antara dua vektor dan biasanya digunakan untuk mengukur kemiripan antara dua teks/dokumen. Fungsi cosine similarity antara item A dan item B ditunjukkan sebagai berikut [[11]](https://jurnal.uns.ac.id/itsmart/article/download/35008/27748). 
-![68747470733a2f2f692e6962622e636f2f744a58465a58422f696d6167652e706e67](https://github.com/user-attachments/assets/7f8ccd15-83c0-45de-8322-7e0ec8086e96)
-
-Keterangan:
-```
-𝑠𝑖𝑚(𝐴, 𝐵) = nilai similaritas dari item A dan item B
-𝑛(𝐴) = banyaknya fitur konten item A 
-𝑛(𝐵) = banyaknya fitur konten item B 
-𝑛(𝐴 ∩ 𝐵)  = banyaknya fitur konten yang terdapat pada item A dan juga terdapat pada item B
-```
-Jika kedua objek memiliki nilai similaritas 1, maka kedua objek dikatakan identik dan sebaliknya. Semakin besar hasil dari fungsi similarity, maka kedua objek yang dievaluasi dianggap semakin mirip dan sebaliknya. 
-
-Tujuan akhir dari perhitungan ini adalah memfilter data ratings berdasarkan dua kriteria utama ; yaitu `pengguna yang aktif` memberikan banyak rating (lebih dari 150 buku) dan `buku yang populer` (telah dirating oleh setidaknya 50 pengguna).
-
-Tahapan yang dilakukan adalah :
-1. Menggabungkan data 
-
-       # Merging ratings with book information
-       ratings_with_name = ratings.merge(books, on='ISBN')
-       ratings_with_name.head()
+        # Merging ratings with book information
+        ratings_with_name = ratings.merge(books, on='ISBN')
+        ratings_with_name.head()
 
     Kode ini berfungsi untuk **menggabungkan (merge) dua dataset**, yaitu dataset `ratings` dan dataset `books`, berdasarkan kolom ISBN yang terdapat pada kedua dataset tersebut.
 
@@ -511,44 +487,48 @@ on='ISBN': Parameter on digunakan untuk menentukan kolom yang digunakan sebagai 
 | 276727  | 0446520802  | 0           | The Notebook                                  | Nicholas Sparks   | 1996                | Warner Books                  | http://images.amazon.com/images/P/0446520802.0... | http://images.amazon.com/images/P/0446520802.0... | http://images.amazon.com/images/P/0446520802.0... |
 | 276729  | 052165615X  | 3           | Help!: Level 1                                | Philip Prowse     | 1999                | Cambridge University Press     | http://images.amazon.com/images/P/052165615X.0... | http://images.amazon.com/images/P/052165615X.0... | http://images.amazon.com/images/P/052165615X.0... |
 | 276729  | 0521795028  | 6           | The Amsterdam Connection : Level 4 (Cambridge)| Sue Leather       | 2001                | Cambridge University Press     | http://images.amazon.com/images/P/0521795028.0... | http://images.amazon.com/images/P/0521795028.0... | http://images.amazon.com/images/P/0521795028.0... |
+  
+ 5. Filtering data
+      Tujuan dari mem-filter data untuk membatasi analisis hanya pada pengguna aktif yang memiliki kontribusi signifikan (memberikan banyak ulasan) dan memastikan analisis hanya mencakup buku-buku populer yang telah menerima jumlah ulasan yang memadai.
 
 
-2. Menghitung jumlah rating per pengguna
-
-         user_rating_counts = ratings_with_name.groupby('User-ID').size()
-
-   Kode ini digunakan untuk menghitung jumlah rating yang diberikan oleh setiap pengguna (User-ID) dalam dataset yang sudah digabungkan antara ratings dan informasi buku (ratings_with_name). Hasilnya adalah jumlah rating yang diberikan oleh masing-masing pengguna.
-
-   Penjelasan Langkah demi Langkah:
-       -  **`ratings_with_name.groupby('User-ID')`:**
-          - Fungsi `groupby()` digunakan untuk mengelompokkan data berdasarkan kolom tertentu. Dalam hal ini, data dikelompokkan berdasarkan kolom `'User-ID'`, yaitu ID unik dari setiap pengguna.
-          - Setiap grup yang dihasilkan adalah data dari satu pengguna, berisi semua rating yang diberikan oleh pengguna tersebut.
-       - **`size()`:**
-          - Fungsi `size()` digunakan untuk menghitung jumlah elemen (atau baris) dalam setiap grup yang telah dibuat oleh `groupby()`.
-          - Dalam hal ini, untuk setiap **User-ID**, `size()` akan menghitung berapa banyak rating yang telah diberikan oleh pengguna tersebut.
-       - **`user_rating_counts =`:**
-          - Hasil dari operasi ini akan disimpan dalam variabel `user_rating_counts`.
-          - `user_rating_counts` adalah sebuah **Series** di mana indeksnya adalah **User-ID**, dan nilainya adalah **jumlah rating** yang diberikan oleh masing-masing penggu
-   
-3. Memilih pengguna aktif
-
+        # Filter users with more than 150 ratings and books with more than 50 ratings
+        user_rating_counts = ratings_with_name.groupby('User-ID').size()
         imp_users = user_rating_counts[user_rating_counts > 150].index
 
-4. Menghitung jumlah rating per buku
-
         book_rating_counts = ratings_with_name.groupby('Book-Title').size()
-   
-5. Memilih buku populer
+        famous_books = book_rating_counts[book_rating_counts >= 50].index
 
-       famous_books = book_rating_counts[book_rating_counts >= 50].index
+         # Apply filters to the dataset
+         filtered_ratings = ratings_with_name[
+         (ratings_with_name['User-ID'].isin(imp_users)) &
+        (ratings_with_name['Book-Title'].isin(famous_books)]
 
-6. Memfilter data rating
+      Kode di atas digunakan untuk memfilter dataset berdasarkan jumlah ulasan yang diberikan oleh pengguna dan jumlah ulasan yang diterima oleh buku.
+   - Pertama, data dikelompokkan berdasarkan `User-ID`. Kode ini mengelompokkan data berdasarkan kolom User-ID (identitas pengguna) menggunakan groupby dan menghitung jumlah baris (rating) untuk setiap pengguna dengan size()
+     
+          #mengelompokkan data berdasarkan kolom `User-ID`#
+          user_rating_counts = ratings_with_name.groupby('User-ID').size()
+     
+   - Dari hasil pengelompokan sebelumnya, kode ini memilih pengguna yang memberikan lebih dari 150 ulasan. Indeks dari pengguna tersebut disimpan dalam variabel imp_users.
+ 
+          imp_users = user_rating_counts[user_rating_counts > 150].index
+ 
+   - Selanjutnya, data dikelompokkan berdasarkan Book-Title untuk menghitung jumlah ulasan per buku, dan hanya buku dengan 50 ulasan atau lebih yang dipilih.
 
-       filtered_ratings = ratings_with_name[
-       (ratings_with_name['User-ID'].isin(imp_users)) & 
-       (ratings_with_name['Book-Title'].isin(famous_books))]
-   
-7. Membuat pivot table
+          #menghitung jumlah ulasan perbuku#
+          book_rating_counts = ratings_with_name.groupby('Book-Title').size()
+  
+         #hanya buku dengan 50 ulasan yang dipilih#
+         famous_books = book_rating_counts[book_rating_counts >= 50].index *hanya buku dengan 50 ulasan yang dipilih*
+     
+   - Setelah kedua filter ini dibuat, dataset difilter ulang untuk hanya menyertakan baris yang memenuhi kedua kriteria tersebut, yaitu pengguna aktif (dengan lebih dari 150 ulasan) dan buku populer (dengan minimal 50 ulasan). Pengguna aktif hanya menyertakan baris dengan `User-ID` yang terdapat dalam `imp_users`. Buku populer hanya menyertakan baris dengan `Book-Title` yang terdapat dalam `famous_books`. Hasil filter ini disimpan ke dalam variabel `filtered_ratings`.
+     
+         filtered_ratings = ratings_with_name[
+         (ratings_with_name['User-ID'].isin(imp_users)) &
+         (ratings_with_name['Book-Title'].isin(famous_books))]
+
+6. Membuat pivot table
    Kode yang digunakan adalah :
    
         # Create a pivot table with Users on rows, Books on columns, and ratings as values
@@ -583,6 +563,28 @@ on='ISBN': Parameter on digunakan untuk menentukan kolom yang digunakan sebagai 
      `pivot_table.head()`
 
      Fungsi ini digunakan untuk menampilkan 5 baris pertama dari pivot table yang baru dibuat, agar bisa melihat contoh data yang dihasilkan. Pivot table ini memberikan gambaran yang jelas tentang bagaimana setiap pengguna menilai setiap buku, yang berguna untuk analisis lebih lanjut seperti rekomendasi buku atau identifikasi pola preferensi pengguna.
+     
+# Modeling
+---
+Setelah dilakukan pra-pemrosesan pada dataset, langkah selanjutnya adalah *modeling* terhadap data. Pada tahap ini Model machine learning yang digunakan pada sistem rekomendasi ini adalah model _Item-Based Collaborative filtering_ dengan _simlarity measure_ yang digunakan adalah _Cosine Similarity_.. 
+
+_Item-Based Collaborative Filtering_ adalah salah satu teknik dalam sistem rekomendasi yang menggunakan data perilaku pengguna untuk memberikan rekomendasi. Prinsip utamanya adalah memanfaatkan pola interaksi pengguna dengan item (misalnya buku, film, atau produk) untuk menyarankan item baru berdasarkan preferensi serupa. 
+
+Metode ini berfokus pada pencarian seberapa mirip buku-buku yang berbeda dengan membandingkan pola rating dari buku-buku tersebut (yaitu, rating yang diberikan oleh semua pengguna). Pada penggunaanya dalam kode, **item-based collaborative filtering** tidak berfokus pada pertimbangan konten buku melainkan berfokus pada interaksi pengguna-item.
+
+Sedangkan _cosine similarity_ adalah salah satu teknik mengukur kesamaan yang bekerja dengan mengukur kesamaan antara dua vektor (pada kasus ini rating yang diberikan oleh pengguna) dan menentukan apakah kedua vektor tersebut menunjuk ke arah yang sama dengan menghitung sudut cosinus antara dua vektor. Semakin kecil sudut cosinus, semakin besar nilai _cosine similarity_.
+
+cara kerja dari fungsi *cosine similiraty* yaitu dengan melakukan perhitungan yang sering digunakan untuk menghitung kemiripan diantara item-item [[11]](https://jurnal.uns.ac.id/itsmart/article/download/35008/27748). Secara umum, fungsi similarity adalah fungsi yang menerima dua buah obyek berupa bilangan riil (0 dan 1) dan mengembalikan nilai kemiripan (similarity) antara kedua obyek tersebut berupa bilangan riil. Cosine similarity merupakan salah satu metode pengukuran kemiripan yang populer. Metode ini digunakan untuk menghitung nilai kosinus sudut antara dua vektor dan biasanya digunakan untuk mengukur kemiripan antara dua teks/dokumen. Fungsi cosine similarity antara item A dan item B ditunjukkan sebagai berikut [[11]](https://jurnal.uns.ac.id/itsmart/article/download/35008/27748). 
+![68747470733a2f2f692e6962622e636f2f744a58465a58422f696d6167652e706e67](https://github.com/user-attachments/assets/7f8ccd15-83c0-45de-8322-7e0ec8086e96)
+
+Keterangan:
+```
+𝑠𝑖𝑚(𝐴, 𝐵) = nilai similaritas dari item A dan item B
+𝑛(𝐴) = banyaknya fitur konten item A 
+𝑛(𝐵) = banyaknya fitur konten item B 
+𝑛(𝐴 ∩ 𝐵)  = banyaknya fitur konten yang terdapat pada item A dan juga terdapat pada item B
+```
+Jika kedua objek memiliki nilai similaritas 1, maka kedua objek dikatakan identik dan sebaliknya. Semakin besar hasil dari fungsi similarity, maka kedua objek yang dievaluasi dianggap semakin mirip dan sebaliknya. 
 
  8. Membuat model kesamaan (_SImiliarity_)
 
