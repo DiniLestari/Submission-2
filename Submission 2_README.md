@@ -91,7 +91,7 @@ Jenis dan Ukuran Berkas | csv (73.29 MB), csv (22.63 MB), csv (11.62)
 
 _Book-Crossing dataset_ terdiri dari tiga berkas berikut:
 
-**Users.csv**: Berisi data pengguna dengan ID pengguna (User-ID) yang telah dianonimkan dan dipetakan ke angka-angka. Data demografis seperti Lokasi dan Usia disediakan jika tersedia. Jika tidak ada, kolom-kolom ini akan berisi nilai NULL. Dalam `User.csv` terdapat delapan kolom yaitu ;
+**Users.csv**: Berisi data pengguna dengan ID pengguna (User-ID) yang telah dianonimkan dan dipetakan ke angka-angka. Data demografis seperti Lokasi dan Usia disediakan jika tersedia. Jika tidak ada, kolom-kolom ini akan berisi nilai NULL. Dalam `User.csv` terdapat tiga kolom yaitu ;
    - `User-ID`           : Berisi data pengguna dengan ID pengguna (User-ID)
    - `Location`          : Data demografis dari tempat tinggal User
    - `Age`               : Umur User
